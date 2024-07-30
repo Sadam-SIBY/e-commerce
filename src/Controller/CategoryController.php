@@ -11,8 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/admin')]
 class CategoryController extends AbstractController
+
 {
+   
     #[Route('/category', name: 'app_category')]
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -23,7 +26,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('category/new', name:'app_category_new')]
+    #[Route('/category/new', name:'app_category_new')]
     public function addCategory(EntityManagerInterface $em, Request $request): Response
     {
         $category = new Category();
