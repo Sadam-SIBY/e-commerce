@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Historique des stocks {% endblock %}
+{% block body %}
+<div class="container mt-5">
+    <table class="table">
+        <tr>
+            <td>id</td>
+            <td>quantité</td>
+            <td>date d'ajout</td>
+        </tr>
+        {% for productAdded in productsAdded %}
+            <tr>
+                <td> {{productAdded.id }}</td>
+                <td>{{productAdded.quantity }}</td>
+                <td>{{productAdded.createdAt|date('d-m-Y H:i:s') }}</td>
+            </tr>
+        {% endfor  %}
+    </table>
+
+</div>
+{% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\AddProductHistory;
 use App\Entity\Product;
 use App\Form\AddProductHistoryType;
 use App\Form\ProductType;
+use App\Form\ProductUpdateType;
 use App\Repository\AddProductHistoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -82,12 +83,32 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Product $product, EntityManagerInterface $entityManager,
+                        SluggerInterface $slugger): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductUpdateType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $image = $form->get('image')->getData();
+
+            if ($image){
+                $orginalName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFileName = $slugger->slug($orginalName);
+                
+                $newFileName = $safeFileName.'-'.uniqid().'.'.$image->guessExtension();
+                try{
+                    $image->move(
+                        $this->getParameter('image_dir'),
+                        $newFileName
+
+                    );
+                }catch(FileException $exception){};
+
+                $product->setImage($newFileName);
+            }
+
             $entityManager->flush();
 
             $this->addFlash('success', 'votre produit a été modifié avec succès');
@@ -156,15 +177,11 @@ class ProductController extends AbstractController
         $product = $productRepository->find($id);
         $productAddedHistory = $AddProductHistoryRepository->findBy(
             ['product'=>$product], ['id'=>'DESC']);
-       
 
-       
-
-
-        return $this->render('product/addStock.html.twig',
+        return $this->render('product/addedStockHistoryShow.html.twig',
              [
-              'product'=> $product
+              'productsAdded'=> $productAddedHistory,
+              'product' => $product
             ]);
-
     }
 }
