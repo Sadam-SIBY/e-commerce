@@ -14,9 +14,10 @@
         </div>
         <div class="col-md-8">
         <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
+            <h5 class="card-title-product-show ">{{ product.name }}</h5>
             <p class="card-text">{{ product.description }}</p>
-            <a href ="" class="btn btn-outline-secondary">Ajouter au panier</a>
+            <h3>{{ product.price }} EUROS</h3>
+            <a href ="" class="btn btn-add-to-card">Ajouter au panier</a>
 
             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
         </div>
@@ -28,11 +29,12 @@
             {% for product in products %}
                 <div class ="col-md-3 mt-4">
                     <div class="card" style="width: 18rem;">
-                        <img src="{{asset('/uploads/images/'~product.image)}}" class="card-img-top" alt="...">
+                        <img class = "img_card" src="{{asset('/uploads/images/'~product.image)}}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <a  class= "product_link" href="{{path('app_home_product_show', {'id':product.id})}}"><h5 class="card-title">{{product.name}}</h5></a>
                             <p class="card-text">{{product.description|slice(0,60)}}...</p>
-                            <a href="#" class="btn btn-outline-secondary">Ajouter au panier</a>
+                            <h3>{{ product.price }} EUROS</h3>
+                            <a href="#" class="btn btn-add-to-card">Ajouter au panier</a>
                         </div>
                     </div>
                 </div>

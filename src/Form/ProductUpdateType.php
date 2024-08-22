@@ -41,7 +41,7 @@ class ProductUpdateType extends AbstractType
             // ->add('Stock')
             ->add('subCategories', EntityType::class, [
                 'class' => SubCategory::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
             ])
         ;
