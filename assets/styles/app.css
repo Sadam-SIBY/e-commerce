@@ -23,8 +23,10 @@ h5 {
     text-decoration: none;
     font-size: 14px;
 }
-.card-title{
+.card-title, .card-title-show{
     color: #E67E22;
+}
+.card-title{
     cursor: pointer;
 }
 

@@ -16,7 +16,7 @@
                         <a  class= "product_link" href="{{path('app_home_product_show', {'id':product.id})}}"><h5 class="card-title">{{product.name}}</h5></a>
                         <p class="card-text">{{product.description|slice(0,60)}}...</p>
                         <h3>{{ product.price }} EUROS</h3>
-                        <a href="#" class="btn btn-add-to-card">Ajouter au panier</a>
+                        <a href="{{ path('app_cart_new', {'id':product.id}) }}" class="btn btn-add-to-card">Ajouter au panier</a>
                     </div>
                 </div>
              </div>

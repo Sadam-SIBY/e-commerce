@@ -4,10 +4,10 @@
   <ul style="display:flex; align-items:center; justify-content:space-around"class="pagination">
     {% if previous is defined %}
         <li class="page-item ">
-        <a class="page-link" href="{{ path(route, query|merge({(pageParameterName):previous}))}}">Previous</a>
+        <a class="page-link" href="{{ path(route, query|merge({(pageParameterName):previous}))}}">Précédent</a>
         </li>
     {% endif %}
-    {% for page in pagesInRange %}
+    {# {% for page in pagesInRange %}
          {% if page != current %}
             <li class="page-item active" aria-current="page">
                 <a style="border-radius:50%" href="{{ path(route, query|merge({(pageParameterName):page}))}}" class="page-link">{{page}}</a>
@@ -17,13 +17,13 @@
                 <a style="border-radius:50%; background:orange; border-color:orange" href="{{ path(route, query|merge({(pageParameterName):page}))}}" class="page-link disabled text-white">{{page}}</a>
             </li>
         {% endif %}
-    {% endfor %}
+    {% endfor %} #}
 
        {# <li class="page-item"><a class="page-link" href="#">1</a></li>
        <li class="page-item"><a class="page-link" href="#">3</a></li> #}
     {% if next  is defined %}
         <li class="page-item">
-        <a class="page-link"  href="{{ path(route, query|merge({(pageParameterName):next}))}}">Next</a>
+        <a class="page-link"  href="{{ path(route, query|merge({(pageParameterName):next}))}}">Suivant</a>
         </li>
     {% endif %}
   </ul>
