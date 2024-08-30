@@ -3,5 +3,39 @@
 {% block title %}Panier{% endblock %}
 
 {% block body %}
+    <div class="container">
+        <h1>Panier</h1>
+            {% include 'layouts/_flash_message.html.twig'%}
+        <table class="table table-bodered">
+            <tr>
+                <th>Produit</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Prix total</th>
+                <th>Action</th>
+            </tr>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.product.price * item.quantity }}</td>
+                    <td>
+                        <a href="{{ path ('app_cart_product_remove', {'id':item.product.id})}}" class=" text-danger text-decoration-none ">Supprimer du panier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <p>Votre panier est vide</p>
+            {% endfor %}
+        </table>
+        {% if total > 0 %}
+        <br><br>
+        <h2>Total: {{ total }} € </h2>
 
+        <div class="row">
+            <a href="" class="btn btn-outline-success col-2 m-lg-1">Valider la commande</a>
+            <a href="{{ path ('app_cart_remove')}}" class="btn btn-outline-danger col-2 m-lg-1">Supprimer le panier</a>
+        </div>
+        {% endif %}
+    </div>
 {% endblock %}

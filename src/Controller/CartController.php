@@ -29,13 +29,13 @@ class CartController extends AbstractController
             ];
         }
         
-        $total = array_sum(array_map(function($item){
+        $total = array_sum(array_map(function($items){
 
-            return $item['product']->getPrice() * $item['quantity'];
+            return $items['product']->getPrice() * $items['quantity'];
 
         }, $cartWithData));
 
-        dd($total);
+   
         return $this->render('cart/index.html.twig', [
             'items' => $cartWithData,
             'total' =>$total
@@ -56,10 +56,43 @@ class CartController extends AbstractController
         $session->set('cart', $cart);
 
        return $this->redirectToRoute('app_cart');
+    
+    }
 
-    //    return $this->render('cart/index.html.twig', [
-       
-    // ]);
+    /**
+     * Route suppression d'un produit au panier
+     */ 
+
+
+    #[Route('/cart/remove/{id}', name: 'app_cart_product_remove', methods: ['GET'])]
+    public function removeToCart(int $id, SessionInterface $session): Response
+
+    {
+        $cart = $session->get('cart', []);
+        if(!empty($cart[$id])){
+            // supprimer du panier 
+            unset($cart[$id]);
+        }
+
+        $session->set('cart', $cart);
+        $this->addFlash('danger', "Le produit a été supprimé avec succès du panier");
+       return $this->redirectToRoute('app_cart');
+    
+    }
+
+    /**
+     * Suppression du panier
+     */
+
+    #[Route('/cart/remove', name: 'app_cart_remove', methods: ['GET'])]
+    public function remove( SessionInterface $session): Response
+
+    {
+        $session->set('cart', []);
+      
+
+        $this->addFlash('danger', "Votre panier est vide");
+       return $this->redirectToRoute('app_cart');
     
     }
 }
