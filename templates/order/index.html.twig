@@ -14,11 +14,65 @@
                 {{ form_end(form) }}
             </div>
             <div class="col-4"><br><br><br><br>
-                <span>Montant total à payer : </span>
-                <h2> {{ total }}</h2>
+                <span>Montant à payer : </span>
+                <h2> 
+                    <span id="card-price">{{ total }}</span> Euros
+                </h2>
                 <span>Frais de livraison</span>
+                <h2> 
+                   <span  id="shippingCost"></span>
+                   Euros
+                </h2>
+                <span>Montant total à payer</span>
+                <h2>
+                     <span class ="total-price"></span>
+                </h2>
+               
             </div>
         </div>
-    
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+           const citySelector =  $('#order_city');
+           const cityValue = citySelector.val();
+           const url = `https://127.0.0.1:8000/city/${cityValue}/shipping/cost`;
+
+
+        function ajaxRequest(url){
+            $.ajax({
+            url:url,
+            type:'GET',
+            success:function (response){
+
+            const newResponse = JSON.parse(response)
+            if(parseInt(newResponse.status) === 200){
+                $('#shippingCost').text(newResponse.content)
+
+                // conversion des montants en entier 
+                const cardPrice = parseInt($("#card-price").text());
+                const shippingCost = parseInt($("#shippingCost").text());
+            
+                //Montant total à payer
+
+               $('.total-price').text(cardPrice+shippingCost);
+
+            }
+                
+            },
+            error:function (xhr, status, error){
+
+            }
+          })
+        }
+        ajaxRequest(url);
+
+            citySelector.on('change', function (){
+                const urlUpdate = `https://127.0.0.1:8000/city/${$(this).val()}/shipping/cost`;
+               ajaxRequest(urlUpdate);
+            })
+        })
+    </script>
+
 {% endblock %}
