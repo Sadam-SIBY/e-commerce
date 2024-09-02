@@ -16,18 +16,21 @@ class OrderType extends AbstractType
         $builder
             ->add('firstName', null,
             [
+                'label'=>'Prénom',
                 'attr'=>[
                     'class'=>'form form-control'
                 ]
             ])
             ->add('LastName', null,
             [
+                'label'=>'Nom',
                 'attr'=>[
                     'class'=>'form form-control'
                 ]
             ])
             ->add('phone', null,
             [
+                'label'=>'Numéro de téléphone',
                 'attr'=>[
                     'class'=>'form form-control'
                 ]
@@ -46,7 +49,13 @@ class OrderType extends AbstractType
                 'choice_label' => 'name',
                 'attr'=>[
                     'class'=>'form form-control'
-                ]
+                ],
+                'label'=>'Ville'
+            ])
+            ->add('payOnDelivery', null,
+            [
+                'label'=>'Payer à la livraison'
+                
             ])
         ;
     }
