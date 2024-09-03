@@ -4,7 +4,7 @@
   <ul style="display:flex; align-items:center; justify-content:space-between"class="pagination">
     {% if previous is defined %}
         <li class="page-item ">
-        <a class="btn btn-outline-dark" href="{{ path(route, query|merge({(pageParameterName):previous}))}}"> Précedent</a>
+        <a class="btn btn-outline-secondary" href="{{ path(route, query|merge({(pageParameterName):previous}))}}"> Précedent</a>
         </li>
     {% endif %}
     {# {% for page in pagesInRange %}
@@ -23,7 +23,7 @@
        <li class="page-item"><a class="page-link" href="#">3</a></li> #}
     {% if next  is defined %}
         <li class="page-item">
-        <a class=" btn btn-outline-dark"  href="{{ path(route, query|merge({(pageParameterName):next}))}}"> Suivant </a>
+        <a class=" btn btn-outline-secondary"  href="{{ path(route, query|merge({(pageParameterName):next}))}}"> Suivant </a>
         </li>
     {% endif %}
   </ul>

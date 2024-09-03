@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+        
+     <div class="container">
+        <h2>Liste des commandes</h2>
+        {% for order in orders %}
+            <h5> Commande n°: {{order.id}}</h5>
+                <span>Informations du client : </span>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nom </th>
+                            <th>Prénom</th>
+                            <th>Téléphone</th>
+                            <th>Adresse</th>
+                            <th>Ville</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{order.firstName}}</td>
+                            <td>{{order.lastName}}</td>
+                            <td>{{order.phone}}</td>
+                            <td>{{order.adresse}}</td>
+                            <td>{{order.city.name}}</td>
+                        </tr>
+                    
+                    </tbody>
+                </table>
+                <span>Corps de la commande</span>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Image produit</th>
+                        <th>Nom du produit</th>
+                        <th>Description du produit</th>
+                        <th>Prix unitaire</th>
+                        <th>Quantité</th>
+                        <th>Prix total</th>    
+                    </tr>
+                    {% for product in order.OrderProducts %}
+                        <tr>
+
+                            <td><img style='width:80px' src="{{asset('/uploads/images/'~product.product.image)}}" alt=""></td>
+                            <td>{{product.product.name}}</td>
+                            <td>{{product.product.description|slice(0,200)}}...</td>
+                            <td>{{product.product.price}} €</td>
+                            <td>{{product.quantity}}</td>
+                            <td>{{product.product.price*product.quantity}} €</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <span>Frais de livraison : {{order.city.shippingCost}} €</span>
+                <h5>Total à payer : {{order.totalPrice}} €</h5>
+                <a href="" class="btn btn-outline-success">Marquer comme livrer</a>
+                <a href="" class="btn btn-outline-danger">Supprimer la commande</a>
+                
+                 <br><br>
+
+        {% endfor %}
+   {{ knp_pagination_render(orders, 'layouts/pagination_template.html.twig') }}
+    </div>
+
+{% endblock %}

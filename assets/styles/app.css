@@ -9,11 +9,14 @@ h1, h2{
 }
 
 h3{
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1.2rem;
+
 }
 h5 {
     font-weight: bold;
+}
+h6{
+    font-size:1rem;
 }
 
 .product_link{
@@ -24,7 +27,7 @@ h5 {
     font-size: 14px;
 }
 .card-title, .card-title-show{
-    color: #E67E22;
+    color: #2C3E50
 }
 .card-title{
     cursor: pointer;
