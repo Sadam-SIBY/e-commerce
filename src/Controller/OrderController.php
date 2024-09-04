@@ -91,6 +91,30 @@ class OrderController extends AbstractController
     }
 
 
+    #[Route('/editor/order/{id}/isCompleted/update', name: 'app_orders_is_completed_update')]
+    public function isCompletedUpdate($id, OrderRepository $orderRepository, EntityManagerInterface $em):Response
+    {
+        $order = $orderRepository->find($id);
+        $order->setCompleted(true);
+        $em->flush();
+
+        $this->addFlash('success', 'Modification effectuée avec succès');
+        return  $this->redirectToRoute('app_orders_show');
+
+    }
+//Suppression de la commande
+    #[Route('/editor/order/{id}/remove', name: 'app_orders_remove')]
+    public function removeOrder($id, Order $order, EntityManagerInterface $em):Response
+    {
+   
+        $em->remove($order);
+        $em->flush();
+
+        $this->addFlash('danger', 'Commande supprimée avec succès');
+        return  $this->redirectToRoute('app_orders_show');
+
+    }
+
     #[Route('/order-ok-message', name: 'order_ok_message')]
     public function orderMessage():Response
     {
