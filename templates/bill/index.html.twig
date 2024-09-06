@@ -47,10 +47,12 @@
 			<span>Corps de la commande</span>
 			<table class="table table-bordered">
 				<thead>
-					<th>Nom du produit</th>
-					<th>Prix unitaire</th>
-					<th>Quantité</th>
-					<th>Prix total</th>    
+					 <tr>
+						<th>Nom du produit</th>
+						<th>Prix unitaire</th>
+						<th>Quantité</th>
+						<th>Prix total</th>  
+            		</tr>  
 				</thead>
 				{% for product in order.OrderProducts %}
 					<tr>

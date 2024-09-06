@@ -1,0 +1,45 @@
+{# <style>
+	table{
+		width: 100%;
+		border-collapse:collapse;
+	}
+	th, td{
+		border: 1px solid #ddd;
+		padding:8px;
+		text-align:left
+	}
+	thead{
+		background: #f2f2f2
+	}
+	tbody tr:nth-child(odd){
+		background: #f9f9f9
+	}
+</style>
+
+<div class="container mt-5">
+    <h1>Confirmation de la reception de la commande</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, quaerat accusamus ad optio amet unde, quam molestiae cum suscipit nobis ducimus repellat nostrum non reiciendis harum iusto delectus architecto voluptas.</p>
+    <h5>Détails de la commande</h5><br>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nom du produit</th>
+                <th>Prix unitaire</th>
+                <th>Quantité</th>
+                <th>Prix total</th>  
+            </tr>
+              
+        </thead>
+        {% for product in order.OrderProducts %}
+            <tr>
+                <td>{{product.product.name}}</td>
+                <td>{{product.product.price}} €</td>
+                <td>{{product.quantity}}</td>
+                <td>{{product.product.price*product.quantity}} €</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <span>Frais de livraison : {{order.city.shippingCost}} €</span>
+    <hr>
+    <h3>Total à payer : {{order.totalPrice}} €</h3>
+</div> #}
