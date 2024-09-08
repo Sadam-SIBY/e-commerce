@@ -8,6 +8,7 @@ use App\Service\Cart;
 use DateTimeImmutable;
 use App\Form\OrderType;
 use App\Entity\OrderProducts;
+use App\Service\StripePayment;
 use Symfony\Component\Mime\Email;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
@@ -30,11 +31,13 @@ class OrderController extends AbstractController
         ProductRepository $productRepository,
         EntityManagerInterface $em,
         Cart $cart,
+
     ): Response
     {
         $data = $cart->getCart($session);
 
         $order = new Order();
+        
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
 
@@ -58,6 +61,7 @@ class OrderController extends AbstractController
                     }
                 }
                 $session->set('cart', []);
+ 
 
          // Mail de confirmation de commande
                 // $html = $this->renderView('mail/orderConfirm.html.twig',[
@@ -71,11 +75,20 @@ class OrderController extends AbstractController
                 // ->html($html);
 
                 // $this->mailer->send($email);
-                return $this->redirectToRoute('order_ok_message');
+        return $this->redirectToRoute('order_ok_message');
 
             }
-        }
+        $payment = new StripePayment();
+        $shippingCost = $order->getCity()->getShippingCost();
+        $payment->startPayment($data, $shippingCost);
 
+        $stripeRedirectUrl = $payment->getStripeRedirectUrl();
+        // dd($stripeRedirectUrl);
+
+        return $this->redirect($stripeRedirectUrl);
+      
+        }
+   
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
             'total'=>$data['total']

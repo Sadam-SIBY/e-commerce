@@ -1,38 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande{% endblock %}
+{% block title %}Paiement Réussi{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <h1>Checkout</h1>
-                {{ form_start(form,{'attr': {'data-turbo':'false'}}) }}
-                    {{ form_widget(form) }} <br>
-                    <input type="submit" value="continuer" class="btn btn-add-to-card">
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 text-success">Merci pour votre achat !</h1>
+            <p class="lead">Votre paiement a été traité avec succès.</p>
+            <p>Une confirmation de votre commande a été envoyée à votre adresse e-mail.</p>
 
-                {{ form_end(form) }}
+            <div class="alert alert-success mt-4" role="alert">
+                <strong>Transaction ID :</strong> 
+                {# {{ transaction_id }} #}
+                 <br>
+                <strong>Montant total Hors TVA:</strong>
+                 {{ total | number_format(2, ',', ' ') }} € 
+                 <br>
+                <strong>Date de la transaction :</strong>
+                 {{ "now"|date("m/d/Y") }}
+
             </div>
-            <div class="col-4"><br><br><br><br>
-                <span>Montant à payer : </span>
-                <h2> 
-                    <span id="card-price">{{ total }}</span> Euros
-                </h2>
-                <span>Frais de livraison</span>
-                <h2> 
-                   <span  id="shippingCost"></span>
-                   Euros
-                </h2>
-                <span>Montant total à payer</span>
-                <h2>
-                     <span class ="total-price"></span>
-                </h2>
-               
-            </div>
+
+            
+
+            <a href="{{ path('app_home') }}" class="btn btn-primary mt-3">Retour à l'accueil</a>
+            <a href="#" class="btn btn-secondary mt-3">Voir mes commandes</a>
         </div>
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function(){
            const citySelector =  $('#order_city');
@@ -74,5 +73,4 @@
             })
         })
     </script>
-
 {% endblock %}
