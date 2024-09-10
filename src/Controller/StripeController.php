@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use Stripe\Stripe;
+use App\Entity\Order;
 use App\Service\Cart;
+use Doctrine\ORM\EntityManager;
+use App\Repository\OrderRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,20 +17,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StripeController extends AbstractController
 {
     #[Route('/pay/success', name: 'app_stripe_success')]
-    public function success(
-        SessionInterface $session, 
-        Cart $cart,
-    ): Response {
-        // Récupérer les données du panier
-        $data = $cart->getCart($session);
-        $selectedCity = '1'; //  ville sélectionnée
-    
-        return $this->render('stripe/index.html.twig', [
-            'total' => $data['total'],
-            'selected_city' => $selectedCity, 
-        ]);
-    }
-    
+public function success(
+    SessionInterface $session, 
+    Cart $cart
+): Response {
+
+    return $this->render('stripe/index.html.twig', [
+
+    ]);
+}
+
     #[Route('/pay/cancel', name: 'app_stripe_cancel')]
     public function cancel(): Response
     {
@@ -36,7 +36,7 @@ class StripeController extends AbstractController
     }
 
     #[Route('/stripe/notify', name: 'app_stripe_notify')]
-    public function stripeNotify(Request $request): Response
+    public function stripeNotify(Request $request, OrderRepository $orderRepository, EntityManagerInterface $em): Response
     {
        Stripe::setApiKey($_SERVER['STRIPE_SECRET']);
 
@@ -53,19 +53,33 @@ class StripeController extends AbstractController
         }catch(\UnexpectedValueException $e){
             return new Response ('payload invalide', 400);
         }
-        catch(\Stripe\Exception\SignatureVerificationException $e){
+        catch(\Stripe\Exception\SignatureVerificationException $em){
             return new Response ('Signature invalide');
         }
 
         switch ($event->type){
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object;
+
                 $fileName = 'stripe-details-'.uniqid().'txt';
-                file_put_contents($fileName, $paymentIntent);
+
+                $orderId = $paymentIntent->metadata->orderId;
+
+                $order = $orderRepository->find($orderId);
+
+                $cartPrice = $order->getTotalPrice();
+
+                $stripeTotalAmount = $paymentIntent->amount/100;
+
+                if ($cartPrice == $stripeTotalAmount){
+                    $order->setPaymentCompleted(1);
+                    $em->flush();
+                }
+
                 break;
             
             case 'payment_method.attached':
-                $payementMethod = $event->data->object;
+                $paymentMethod = $event->data->object;
                 break;
             default :
                 break;

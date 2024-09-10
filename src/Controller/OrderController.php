@@ -42,10 +42,13 @@ class OrderController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            if($order->isPayOnDelivery()){
+
                 if(!empty($data['total'])){
-                    $order->setTotalPrice($data['total']);
+                    $totalPrice = $data['total'] + $order->getCity()->getShippingCost();
+                    $order->setTotalPrice($totalPrice);
                     $order->setCreatedAt(new \DateTimeImmutable());
+
+                    $order->setPaymentCompleted(0);
 
                     $em->persist ($order);
                     $em->flush();
@@ -59,33 +62,39 @@ class OrderController extends AbstractController
                         $em->persist ($orderProduct);
                         $em->flush();
                     }
+
+                    if($order->isPayOnDelivery()){
+                        $session->set('cart', []);
+
+                    // Mail de confirmation de commande
+                        // $html = $this->renderView('mail/orderConfirm.html.twig',[
+                        //     'order'=>$order
+                        // ]);
+
+                        // $email = (new Email())
+                        // ->from('FreshShop@gmail.com')
+                        // ->to('to@gmail.com')
+                        // ->subject('Confirmation de reception de la commande.')
+                        // ->html($html);
+
+                    // $this->mailer->send($email);
+                    return $this->redirectToRoute('order_ok_message');
+
+                    }
+
+                    $payment = new StripePayment();
+                    $shippingCost = $order->getCity()->getShippingCost();
+                    $payment->startPayment($data, $shippingCost, $order->getId());
+            
+                    $stripeRedirectUrl = $payment->getStripeRedirectUrl();
+                    // dd($stripeRedirectUrl);
+            
+                    return $this->redirect($stripeRedirectUrl);
+
                 }
-                $session->set('cart', []);
- 
+                
 
-         // Mail de confirmation de commande
-                // $html = $this->renderView('mail/orderConfirm.html.twig',[
-                //     'order'=>$order
-                // ]);
-
-                // $email = (new Email())
-                // ->from('FreshShop@gmail.com')
-                // ->to('to@gmail.com')
-                // ->subject('Confirmation de reception de la commande.')
-                // ->html($html);
-
-                // $this->mailer->send($email);
-        return $this->redirectToRoute('order_ok_message');
-
-            }
-        $payment = new StripePayment();
-        $shippingCost = $order->getCity()->getShippingCost();
-        $payment->startPayment($data, $shippingCost);
-
-        $stripeRedirectUrl = $payment->getStripeRedirectUrl();
-        // dd($stripeRedirectUrl);
-
-        return $this->redirect($stripeRedirectUrl);
+      
       
         }
    

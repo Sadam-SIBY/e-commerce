@@ -49,6 +49,9 @@ class Order
     #[ORM\Column(nullable: true)]
     private ?bool $isCompleted = null;
 
+    #[ORM\Column]
+    private ?bool $isPaymentCompleted = null;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
@@ -193,6 +196,18 @@ class Order
     public function setCompleted(?bool $isCompleted): static
     {
         $this->isCompleted = $isCompleted;
+
+        return $this;
+    }
+
+    public function isPaymentCompleted(): ?bool
+    {
+        return $this->isPaymentCompleted;
+    }
+
+    public function setPaymentCompleted(bool $isPaymentCompleted): static
+    {
+        $this->isPaymentCompleted = $isPaymentCompleted;
 
         return $this;
     }

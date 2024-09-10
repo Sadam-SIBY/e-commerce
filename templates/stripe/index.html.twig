@@ -10,21 +10,7 @@
             <p class="lead">Votre paiement a été effectué avec succès.</p>
             <p>Une confirmation de votre commande a été envoyée à votre adresse e-mail.</p>
 
-            <div class="alert alert-success mt-4" role="alert">
-                <strong>Transaction ID :</strong> 
-                <br>
-                <strong>Montant total Hors TVA:</strong>
-                <span id="card-price">{{ total | number_format(0, ',', ' ') }}</span> €
-                <br>
-                <strong>Frais de livraison :</strong>
-                <span id="shippingCost">0</span> €
-                <br>
-                <strong>Montant total à payer :</strong>
-                <span class="total-price">{{ total | number_format(0, ',', ' ') }}</span> €
-                <br>
-                <strong>Date de la transaction :</strong>
-                {{ "now"|date("m/d/Y") }}
-            </div>
+            
 
             <a href="{{ path('app_home') }}" class="btn btn-primary mt-3">Retour à l'accueil</a>
             <a href="#" class="btn btn-secondary mt-3">Voir mes commandes</a>
@@ -32,46 +18,5 @@
     </div>
 </div>
 
-<!-- Insertion du script -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script>
-    $(document).ready(function(){
-        const cardPriceElement = $('#card-price');  // Prix de la carte
-        const shippingCostElement = $('#shippingCost');  // Frais de la livraison
-        const totalPriceElement = $('.total-price');  // Prix total à payer
-
-        // La ville est passée depuis le backend à Twig
-        const selectedCity = '{{ selected_city }}';
-        const cityUrl = `https://127.0.0.1:8000/city/${selectedCity}/shipping/cost`;
-
-        function updateTotalPrice(cardPrice, shippingCost) {
-            const total = parseInt(cardPrice) + parseInt(shippingCost);
-            totalPriceElement.text(total.toFixed(2));
-        }
-
-        function ajaxRequest(url) {
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(response) {
-                    const newResponse = JSON.parse(response);
-                    if (parseInt(newResponse.status) === 200) {
-                        shippingCostElement.text(newResponse.content);  // Mettre à jour les frais d'expédition
-                        
-                        // Mise à jour du prix total
-                        const cardPrice = parseInt(cardPriceElement.text().replace(/\s/g, ''));  // Conversion du prix au format numérique
-                        const shippingCost = parseInt(newResponse.content);
-                        updateTotalPrice(cardPrice, shippingCost);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.log("Erreur lors de la récupération des frais d'expédition:", error);
-                }
-            });
-        }
-
-        ajaxRequest(cityUrl);
-    });
-</script>
 
 {% endblock %}
