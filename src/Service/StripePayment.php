@@ -47,17 +47,17 @@ class StripePayment
                     'product_data' => [
                         'name' => $product['name'],
                     ],
-                    'unit_amount' => $product['price'] * 100, 
+                    'unit_amount' => $product['price']*100
                 ],
             ], $products)
 
             ],
             'mode'=>'payment',
-            'cancel_url'=>'http://127.0.0.1:8000/pay/cancel',
-            'success_url'=>'http://127.0.0.1:8000/pay/success',
+            'cancel_url'=>'https://127.0.0.1:8000/pay/cancel',
+            'success_url'=>'https://127.0.0.1:8000/pay/success',
             'billing_address_collection' =>'required',
             'shipping_address_collection' =>[
-            'allowed_countries'=>['FR']
+                'allowed_countries'=>['FR']
             ],
             "payment_intent_data"=>[
                 'metadata'=>[

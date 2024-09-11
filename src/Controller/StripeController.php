@@ -22,6 +22,8 @@ public function success(
     Cart $cart
 ): Response {
 
+    $session->set('cart', []);
+
     return $this->render('stripe/index.html.twig', [
 
     ]);
@@ -53,7 +55,7 @@ public function success(
         }catch(\UnexpectedValueException $e){
             return new Response ('payload invalide', 400);
         }
-        catch(\Stripe\Exception\SignatureVerificationException $em){
+        catch(\Stripe\Exception\SignatureVerificationException $e){
             return new Response ('Signature invalide');
         }
 

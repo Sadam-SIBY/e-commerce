@@ -211,4 +211,12 @@ class Order
 
         return $this;
     }
+
+    /**
+     * Get the value of payOnDelivery
+     */ 
+    public function getPayOnDelivery()
+    {
+        return $this->payOnDelivery;
+    }
 }

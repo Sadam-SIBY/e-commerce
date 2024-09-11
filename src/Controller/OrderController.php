@@ -87,40 +87,39 @@ class OrderController extends AbstractController
                     $payment->startPayment($data, $shippingCost, $order->getId());
             
                     $stripeRedirectUrl = $payment->getStripeRedirectUrl();
-                    // dd($stripeRedirectUrl);
             
                     return $this->redirect($stripeRedirectUrl);
 
                 }
-                
-
-      
       
         }
-   
+
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
             'total'=>$data['total']
         ]);
     }
 
-    #[Route('/editor/order', name: 'app_orders_show')]
-    public function getAllOrders(OrderRepository $orderRepository, Request $request, PaginatorInterface $paginator ){
+    #[Route('/editor/order/{type}', name: 'app_orders_show')]
+    public function getAllOrders($type, OrderRepository $orderRepository, Request $request, PaginatorInterface $paginator ){
 
-        $data = $orderRepository->findBy([],  ['id'=>"DESC"]);
+        if ($type == 'is_completed'){
+            $data = $orderRepository->findBy(['isCompleted'=>1],  ['id'=>"DESC"]);
+        } 
+        elseif ($type == 'pay-on-stripe-not-delivered'){
+            $data = $orderRepository->findBy(['isCompleted'=>null, 'payOnDelivery'=>0, 'isPaymentCompleted'=>1],  ['id'=>"DESC"]);
+        }
 
-       
         $orders = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
-            1);
+            2);
       
         return $this->render('order/order.html.twig',
         [
             'orders'=> $orders
         ]);
     }
-
 
     #[Route('/city/{id}/shipping/cost', name: 'app_city_shipping_cost')]
     public function cityShippingCost(City $city):Response
