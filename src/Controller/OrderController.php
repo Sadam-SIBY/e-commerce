@@ -103,18 +103,23 @@ class OrderController extends AbstractController
     #[Route('/editor/order/{type}', name: 'app_orders_show')]
     public function getAllOrders($type, OrderRepository $orderRepository, Request $request, PaginatorInterface $paginator ){
 
+
+        
         if ($type == 'is_completed'){
             $data = $orderRepository->findBy(['isCompleted'=>1],  ['id'=>"DESC"]);
         } 
         elseif ($type == 'pay-on-stripe-not-delivered'){
             $data = $orderRepository->findBy(['isCompleted'=>null, 'payOnDelivery'=>0, 'isPaymentCompleted'=>1],  ['id'=>"DESC"]);
-        }
 
-        $orders = $paginator->paginate(
-            $data,
-            $request->query->getInt('page', 1),
-            2);
-      
+        } 
+
+            $orders = $paginator->paginate(
+                $data = $orderRepository->findBy(['isCompleted'=>null, 'isPaymentCompleted'=>1],  ['id'=>"DESC"]),
+                $request->query->getInt('page', 1),
+                2);
+        
+
+       
         return $this->render('order/order.html.twig',
         [
             'orders'=> $orders

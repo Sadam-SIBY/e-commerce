@@ -47,12 +47,13 @@ public function success(
        $payload = $request->getContent();
        $sig_header = $request->headers->get('stripe-signature');
        $event = null;
-
+      
        try {
             $event = \Stripe\Webhook::constructEvent(
                 $payload, $sig_header, $endpoint_secret
             );
-        }catch(\UnexpectedValueException $e){
+        }
+        catch(\UnexpectedValueException $e){
             return new Response ('payload invalide', 400);
         }
         catch(\Stripe\Exception\SignatureVerificationException $e){
@@ -68,15 +69,16 @@ public function success(
                 $orderId = $paymentIntent->metadata->orderId;
 
                 $order = $orderRepository->find($orderId);
+                $order->setPaymentCompleted(1);
 
                 $cartPrice = $order->getTotalPrice();
 
                 $stripeTotalAmount = $paymentIntent->amount/100;
 
-                if ($cartPrice == $stripeTotalAmount){
+                // if ($cartPrice == $stripeTotalAmount){
                     $order->setPaymentCompleted(1);
                     $em->flush();
-                }
+                // }
 
                 break;
             
@@ -86,6 +88,7 @@ public function success(
             default :
                 break;
         }
+
        return new Response ('evenement reçu', 200);
     }
 }
