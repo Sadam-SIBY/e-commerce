@@ -1,5 +1,5 @@
 body {
-    /* background-color: skyblue; */
+    background-color: #FBF2E8;
 }
 
 h1, h2{
@@ -19,6 +19,72 @@ h6{
     font-size:1rem;
 }
 
+.navbar{
+    background-color: #FCF9F7;
+}
+.navbar-brand{
+    color: #003D44;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+#navbarScroll{
+    justify-content: space-between;
+}
+
+.color_link{
+    color: #003D44;
+}
+.home_page:hover{
+    color: #BF935C;
+}
+input[type="search"]:focus {
+    outline: none; 
+    border-color: #003D44;
+    box-shadow: none; 
+}
+#navbarScroll>ul>li>a{
+        color: #2c3e50;
+        -webkit-font-smoothing: antialiased;
+        font-size: 1.2rem;
+        font-family: Lato-Bold;
+        transition: all .3s ease-in-out;
+}
+
+#navbarScroll>ul>li>a:hover{
+    color: #95a5a6;
+}
+.search{
+    color: #003D44;
+    border: 1px solid #003D44;
+}
+.search:hover{
+    color: #BF935C;
+}
+
+.block_title{
+    background-color: #ffffff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #FBF2E8;
+}
+
+.block_title h2 {
+    margin: 0;
+    padding: 1rem 1rem;
+    color: #003D44;
+
+}
+
+.block_title a {
+    margin-left: 10px; 
+}
+
+.card{
+    border: none ;
+}
+
 .product_link{
     font-family: 'Barlow', sans-serif, Helvetica, sans-serif;
     color : #000000;
@@ -31,23 +97,43 @@ h6{
 }
 .card-title{
     cursor: pointer;
+    color: #003D44;
+    text-align: center;
 }
 
 .card-title:hover {
-    text-decoration: underline;
-    color: #E67E22;
+    color: #FF6911;
 }
 
 .card-title-product-show {
     color: #3498DB;
 }
-.btn-add-to-card{
-    color: #E67E22;
-    border-color: #E67E22;
+
+.card-title-product-show:hover {
+    color: #3498DB;
 }
+.btn-add-to-card{
+    width: 100%;
+    color: #FF6911;
+    border-color: #FF6911;
+}
+
 .btn-add-to-card:hover{
     color: #ffffff;
-    background-color: #E67E22;
+    background-color: #FF6911;
+}
+
+.btn-add-to-card_after_show{
+    width: 100%;
+    background-color: #FF6911;
+    color: #ffffff;
+    font-weight: bold;
+}
+.btn-add-to-card_after_show:hover{
+    width: 100%;
+    background-color: #d35400;
+    color: #ffffff;
+    font-weight: bold;
 }
 .card-text{
     color: #2C3E50
@@ -62,4 +148,45 @@ h6{
    height: 20rem;
     object-fit: cover;
 }
+.img_card_show {
+    width: 100%;
+    height: 30rem;
+    object-fit: cover;
+}
 
+
+.connexion, .register{
+    background-color: #ffffff;
+    width: 100%;
+    padding: 2rem;
+    justify-content: center; 
+    align-items: center;
+}
+
+.connexion_form {
+    font-size: 1.5rem;
+    width: 100%; 
+    max-width: 400px; 
+}
+
+h1 {
+    text-align: center; 
+}
+._link > a{
+    color: #003d44;
+     font-weight: bold;
+}
+
+.btn_pagination{
+    background-color: #ffffff;
+    color: #003D44;
+    border: 1px solid #003D44;
+
+}
+
+.btn_pagination:hover{
+    background-color: #003D44;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+
+}

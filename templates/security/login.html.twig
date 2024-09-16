@@ -1,33 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container mt-5 w-25 connexion">
 
-    <form method="post">
+    <form method="post" class = 'connexion_form'>
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
         {% if app.user %}
             <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se deconnecter</a>
             </div>
         {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-        <label for="inputPassword">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        <h1 class="h3 mb-3 font-weight-normal d-flex justify-content-center" style= "color: #BF935C; font-weight:bold">Déjà client</h1>
+        <label for="inputEmail" style="font-size:1rem; font-weight:bold; color:#003d44 "  >Adresse Email :</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control  mb-3" autocomplete="email" required autofocus placeholder='Adresse Email'>
+        <label for="inputPassword" style="font-size:1rem;font-weight:bold; color:#003d44"  >Mot de passe :</label>
+        <input type="password" name="password" id="inputPassword" class="form-control mb-3" autocomplete="current-password" required placeholder="Mot de passe">
 
         <input type="hidden" name="_csrf_token"
             value="{{ csrf_token('authenticate') }}"
         >
 
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
+        <button class="btn btn-lg w-100 p-3"  style="background: #FF6911; color:#ffffff; font-weight:bold" type="submit">
+            Se connecter
         </button>
     </form>
 </div>

@@ -8,18 +8,24 @@
 <div class="container ">
     <h1>{{product.name}}</h1>
     <div class="card mb-12" style="margin-top:30px" >
-    <div class="row g-0">
+    <div class="row g-0 ">
         <div class="col-md-4">
-        <img src="{{asset('/uploads/images/'~product.image)}}" class="img-fluid rounded-start" alt="...">
+        <img src="{{asset('/uploads/images/'~product.image)}}" class="img_card_show" alt="image du produit">
         </div>
         <div class="col-md-8">
         <div class="card-body">
             <h5 class="card-title-show ">{{ product.name }}</h5>
             <p class="card-text">{{ product.description }}</p>
             <h3>{{ product.price }} EUROS</h3>
-            <a href ="{{ path('app_cart_new', {'id':product.id}) }}" class="btn btn-add-to-card">Ajouter au panier</a>
-
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            {% if product.stock > 0 %}
+                <p class="card-text text-success">En Stock - Expédié sous 24H</p>
+                <a href ="{{ path('app_cart_new', {'id':product.id}) }}" class="btn btn-add-to-card_after_show">Ajouter au panier</a>
+            {% else %}
+                 <p class="card-text text-danger">Stock épuisé</p>
+            {% endif %}
+          
+        
+            <p class="card-text"><small class="text-muted">Livraison gratuite</small></p>
         </div>
         </div>
     </div>

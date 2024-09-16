@@ -1,28 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}S'inscrire{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Register</h1>
+<div class="container mt-5 w-25 register">
+    <h1 class=" mb-3 font-weight-normal d-flex justify-content-center" style= "color: #BF935C; font-weight:bold">S'inscrire</h1>
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
-        {{ form_widget(registrationForm.email, {attr: {'class':'form form-control', 'placeholder':"e-mail"}}) }}
+        {{ form_widget(registrationForm.email, {attr: {'class':'form form-control', 'placeholder':"Adresse Email"}}) }}
         <br>
-         {{ form_widget(registrationForm.firstname, {attr: {'class':'form form-control', 'placeholder':"Nom"}}) }}
-         <br>
-          {{ form_widget(registrationForm.lastname, {attr: {'class':'form form-control', 'placeholder':"prénom"}}) }}
+         {# {{ form_widget(registrationForm.firstname, {attr: {'class':'form form-control', 'placeholder':"Nom"}}) }}
+         <br> #}
+          {{ form_widget(registrationForm.lastname, {attr: {'class':'form form-control', 'placeholder':"Prénom"}}) }}
           <br>
         {{ form_widget(registrationForm.plainPassword, {attr: {'class':'form form-control', 'placeholder':"Mot de passe"}}, {
             label: 'Password'
         }) }}
         <br>
-        {{ form_row(registrationForm.agreeTerms) }}
+        <p class = "_link" >En créant un compte, vous acceptez les <a href="#">conditions d'utilisation 
+        et de vente</a> de Fresh_Shop. Consultez notre <a href="#">déclaration de confidentialité</a> ,
+         notre <a href="#">politique relative aux cookies</a> ainsi que notre <a href="#">politique relative
+          aux publicités ciblées par centres d’intérêts</a>.</p>
+        {# {{ form_row(registrationForm.agreeTerms) }} #}
         <br>
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn w-100 p-3"  style="background: #FF6911; color:#ffffff; font-weight:bold">S'inscrire</button>
     {{ form_end(registrationForm) }}
 </div>
 {% endblock %}
