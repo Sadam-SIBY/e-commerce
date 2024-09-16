@@ -101,20 +101,23 @@ class OrderController extends AbstractController
     }
 
     #[Route('/editor/order/{type}', name: 'app_orders_show')]
-    public function getAllOrders($type, OrderRepository $orderRepository, Request $request, PaginatorInterface $paginator ){
+    public function getAllOrders($type, OrderRepository $orderRepository, Request $request, PaginatorInterface $paginator){
 
-
+       
         
         if ($type == 'is_completed'){
             $data = $orderRepository->findBy(['isCompleted'=>1],  ['id'=>"DESC"]);
         } 
         elseif ($type == 'pay-on-stripe-not-delivered'){
             $data = $orderRepository->findBy(['isCompleted'=>null, 'payOnDelivery'=>0, 'isPaymentCompleted'=>1],  ['id'=>"DESC"]);
+        } 
+        elseif ($type == 'pay-on-stripe-is-delivered'){
+            $data = $orderRepository->findBy(['isCompleted'=>1, 'payOnDelivery'=>0, 'isPaymentCompleted'=>1],  ['id'=>"DESC"]);
 
         } 
 
             $orders = $paginator->paginate(
-                $data = $orderRepository->findBy(['isCompleted'=>null, 'isPaymentCompleted'=>1],  ['id'=>"DESC"]),
+                $data,
                 $request->query->getInt('page', 1),
                 2);
         
@@ -135,14 +138,16 @@ class OrderController extends AbstractController
 
 
     #[Route('/editor/order/{id}/isCompleted/update', name: 'app_orders_is_completed_update')]
-    public function isCompletedUpdate($id, OrderRepository $orderRepository, EntityManagerInterface $em):Response
+    public function isCompletedUpdate($id, OrderRepository $orderRepository, EntityManagerInterface $em, Request $request):Response
     {
         $order = $orderRepository->find($id);
         $order->setCompleted(true);
         $em->flush();
 
         $this->addFlash('success', 'Modification effectuée avec succès');
-        return  $this->redirectToRoute('app_orders_show');
+
+        //redirection vers la page courante
+        return  $this->redirect($request->headers->get('referer'));
 
     }
 //Suppression de la commande
