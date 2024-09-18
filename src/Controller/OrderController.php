@@ -102,8 +102,6 @@ class OrderController extends AbstractController
 
     #[Route('/editor/order/{type}', name: 'app_orders_show')]
     public function getAllOrders($type, OrderRepository $orderRepository, Request $request, PaginatorInterface $paginator){
-
-       
         
         if ($type == 'is_completed'){
             $data = $orderRepository->findBy(['isCompleted'=>1],  ['id'=>"DESC"]);
