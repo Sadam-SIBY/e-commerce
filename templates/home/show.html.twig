@@ -15,7 +15,7 @@
         <div class="card-body">
             <h5 class="card-title-show ">{{ product.name }}</h5>
             <p class="card-text">{{ product.description }}</p>
-            <h3>{{ product.price }} EUROS</h3>
+            <h3> <strong>{{ product.price }} €</strong> </h3>
             {% if product.stock > 0 %}
                 <p class="card-text text-success">En Stock - Expédié sous 24H</p>
                 <a href ="{{ path('app_cart_new', {'id':product.id}) }}" class="btn btn-add-to-card_after_show">Ajouter au panier</a>
@@ -24,7 +24,10 @@
             {% endif %}
           
         
-            <p class="card-text"><small class="text-muted">Livraison gratuite</small></p>
+            <p class="card-text pt-3">Livraison point relais offerte dès 70€<small class="text-muted" style="font-style:italic"> <br>
+                (hors articles en promotion)</small></p>
+            <p class="card-text">Retours 30j gratuits <br>
+             <small class="text-muted" style="font-style:italic">(France métropolitaine) </small></p>
         </div>
         </div>
     </div>
@@ -38,7 +41,7 @@
                         <div class="card-body">
                             <a  class= "product_link" href="{{path('app_home_product_show', {'id':product.id})}}"><h5 class="card-title">{{product.name}}</h5></a>
                             <p class="card-text">{{product.description|slice(0,60)}}...</p>
-                            <h3>{{ product.price }} EUROS</h3>
+                            <h3><strong>{{ product.price }} €</strong> </h3>
                             <a href="{{ path('app_cart_new', {'id':product.id}) }}" class="btn btn-add-to-card">Ajouter au panier</a>
                         </div>
                     </div>

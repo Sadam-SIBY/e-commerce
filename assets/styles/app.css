@@ -114,13 +114,15 @@ input[type="search"]:focus {
 }
 .btn-add-to-card{
     width: 100%;
-    color: #FF6911;
+    background-color: #FF6911;
     border-color: #FF6911;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 .btn-add-to-card:hover{
+    background-color: #d35400;
     color: #ffffff;
-    background-color: #FF6911;
 }
 
 .btn-add-to-card_after_show{
@@ -142,6 +144,13 @@ input[type="search"]:focus {
 
 .card{
     margin-bottom: 1rem;
+}
+.card-body > h3{
+    color: #d35400;
+}
+.card-text-description{
+    color: #4D787D;
+    font-size: 12px;
 }
 .img_card {
     width: 100%;
@@ -176,17 +185,23 @@ h1 {
     color: #003d44;
      font-weight: bold;
 }
-
+.pagination-block{
+    background-color: #ffffff;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding: 1rem 0.5rem 1rem 0.5rem;
+}
 .btn_pagination{
     background-color: #ffffff;
-    color: #003D44;
-    border: 1px solid #003D44;
-
+    color: #4D787D;
+    font-size: 12px;
+    border: 1px solid #f2f2f2;
+    font-style: italic;
 }
 
 .btn_pagination:hover{
-    background-color: #003D44;
-    color: #ffffff;
-    border: 1px solid #ffffff;
+
+    border: 1px solid #BF935C;
 
 }

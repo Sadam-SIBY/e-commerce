@@ -45,7 +45,7 @@
             url:url,
             type:'GET',
             success:function (response){
-
+der/order.html.t
             const newResponse = JSON.parse(response)
             if(parseInt(newResponse.status) === 200){
                 $('#shippingCost').text(newResponse.content)
