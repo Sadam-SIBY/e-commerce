@@ -1,7 +1,15 @@
 body {
     background-color: #FBF2E8;
-}
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 h1, h2{
     margin-top: 30px;
     margin-bottom: 30px;
@@ -35,7 +43,9 @@ h6{
 #navbarScroll{
     justify-content: space-between;
 }
-
+.container{
+    flex: 1;
+}
 .color_link{
     color: #003D44;
 }
@@ -237,4 +247,18 @@ h1 {
     color: #333333;
     border-color: #f4f4f4;
 
+}
+
+.footer-container{
+    min-height: 30vh;
+    background-color: #003D44;
+    color: #ffffff;
+   display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+   flex-direction: row-reverse;
+   justify-content: space-around;
+   align-content: center;
+
+   flex-shrink: 0;
 }
