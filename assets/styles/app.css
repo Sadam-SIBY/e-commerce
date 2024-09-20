@@ -6,17 +6,22 @@ h1, h2{
     margin-top: 30px;
     margin-bottom: 30px;
     font-weight: bold;
+    color: #003D44;
 }
 
 h3{
     font-size: 1.2rem;
-
 }
 h5 {
     font-weight: bold;
 }
 h6{
     font-size:1rem;
+}
+
+.top-menu{
+    background-color:#003D44 ;
+    color: #ffffff;
 }
 
 .navbar{
@@ -70,10 +75,11 @@ input[type="search"]:focus {
     border: 1px solid #FBF2E8;
 }
 
-.block_title h2 {
+.block_title h6 {
     margin: 0;
-    padding: 1rem 1rem;
+    padding: 0.5rem 0.5rem;
     color: #003D44;
+    font-weight: bold;
 
 }
 
@@ -185,6 +191,26 @@ h1 {
     color: #003d44;
      font-weight: bold;
 }
+
+.section_order, .section_cart{
+    background-color: #ffffff;
+    margin-top: 1rem;
+    padding: 2rem 2rem 2rem 2rem;
+   
+}
+#shippingCost_{
+    color: #7F9DA1;
+    font-size: 1.2rem;
+    font-weight:bold
+}
+#card_{
+    color: #7F9DA1;
+    font-size: 1.2rem;
+}
+.total_{
+    color: #d35400;
+    font-size: 1.3rem;
+}
 .pagination-block{
     background-color: #ffffff;
     margin-bottom: 2rem;
@@ -203,5 +229,12 @@ h1 {
 .btn_pagination:hover{
 
     border: 1px solid #BF935C;
+
+}
+
+.active>.page-link, .page-link.active{
+    background-color: #ffffff;
+    color: #333333;
+    border-color: #f4f4f4;
 
 }

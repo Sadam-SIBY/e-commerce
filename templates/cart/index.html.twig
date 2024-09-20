@@ -3,11 +3,12 @@
 {% block title %}Panier{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Panier</h1>
+    <div class="container section_cart">
+     <div class ="block_title"> <h6>Panier</h6> | <a class= 'color_link home_page' href="{{path('app_home')}}">Page produits</a></div>
             {% include 'layouts/_flash_message.html.twig'%}
         <table class="table table-bodered">
             <tr>
+                <th></th>
                 <th>Produit</th>
                 <th>Prix</th>
                 <th>Quantité</th>
@@ -16,12 +17,15 @@
             </tr>
             {% for item in items %}
                 <tr>
+                    <td >
+                     <img style='width:80px'src="{{asset('/uploads/images/'~item.product.image)}}"  alt="image du produit">
+                    </td>
                     <td>{{ item.product.name }}</td>
                     <td>{{ item.product.price }}</td>
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.product.price * item.quantity }}</td>
                     <td>
-                        <a href="{{ path ('app_cart_product_remove', {'id':item.product.id})}}" class=" text-danger text-decoration-none ">Supprimer du panier</a>
+                        <a href="{{ path ('app_cart_product_remove', {'id':item.product.id})}}" class=" text-danger text-decoration-none "><i class="fa-solid fa-trash-can"></i></a>
                     </td>
                 </tr>
             {% else %}
@@ -33,7 +37,11 @@
         <h2>Total: {{ total }} € </h2>
 
         <div class="row">
-            <a data-turbo="false" href="{{path('app_order')}}" class="btn btn-outline-success col-2 m-lg-1">Valider la commande</a>
+            {% if app.user %}
+                <a data-turbo="false" href="{{path('app_order')}}" class="btn btn-outline-success col-2 m-lg-1">Valider la commande</a>
+            {% else %}
+                <a data-turbo="false" href="{{path('app_login')}}" class="btn btn-outline-success col-2 m-lg-1" style="cursoir:pointer">Valider la commande</a>
+            {% endif %}
             <a href="{{ path ('app_cart_remove')}}" class="btn btn-outline-danger col-2 m-lg-1">Supprimer le panier</a>
         </div>
         {% endif %}

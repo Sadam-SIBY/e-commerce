@@ -3,7 +3,7 @@
 {% block title %}Commande{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container section_order">
         <div class="row">
             <div class="col-8">
                 <h1>Informations personnelles</h1>
@@ -15,17 +15,17 @@
             </div>
             <div class="col-4"><br><br><br><br>
                 <span>Montant à payer : </span>
-                <h2> 
-                    <span id="card-price">{{ total }}</span> Euros
+                <h2 id="card_"> 
+                    <span id="card-price">{{ total }}</span> €
                 </h2>
                 <span>Frais de livraison</span>
-                <h2> 
-                   <span  id="shippingCost"></span>
-                   Euros
+                 <h2  id="shippingCost_">
+                   <span  id="shippingCost" ></span>
+                  
                 </h2>
                 <span>Montant total à payer</span>
-                <h2>
-                     <span class ="total-price"></span>
+                <h2 class ="total_">
+                     <span class ="total-price"></span> € TTC
                 </h2>
                
             </div>
@@ -45,18 +45,24 @@
             url:url,
             type:'GET',
             success:function (response){
-der/order.html.t
             const newResponse = JSON.parse(response)
             if(parseInt(newResponse.status) === 200){
-                $('#shippingCost').text(newResponse.content)
+                const shippingCost = parseInt(newResponse.content);
+                        $('#shippingCost').text(shippingCost + " €");
 
                 // conversion des montants en entier 
                 const cardPrice = parseInt($("#card-price").text());
-                const shippingCost = parseInt($("#shippingCost").text());
+              
             
                 //Montant total à payer
-
-               $('.total-price').text(cardPrice+shippingCost);
+               let totalPrice = cardPrice+shippingCost
+                if (totalPrice > 90) {
+                     $('#shippingCost').html('<del style="color:#e74c3c">' + shippingCost + ' €</del> Livraison offerte');
+                    $('.total-price').text(cardPrice);
+                }else {
+                    $('.total-price').text(totalPrice);
+                }
+           
 
             }
                 

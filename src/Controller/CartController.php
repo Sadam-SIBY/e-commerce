@@ -2,12 +2,17 @@
 
 namespace App\Controller;
 
-use App\Repository\ProductRepository;
+use App\Entity\User;
 use App\Service\Cart;
+use App\Repository\UserRepository;
+use App\Repository\ProductRepository;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class CartController extends AbstractController
 {
@@ -17,13 +22,22 @@ class CartController extends AbstractController
         }
 
     #[Route('/cart', name: 'app_cart')]
-    public function index(SessionInterface $session, Cart $cart): Response
+    public function index(SessionInterface $session, Cart $cart, Security $security, Request $request, 
+    AuthenticationUtils $authenticationUtils ): Response
     {
-        $data = $cart->getCart($session);
-          
+        $user = $security->getUser();
+        $data = $cart->getCart($session);   
+
+        if (!$user) {
+        // l'URL  après connexion
+        $request->getSession()->set('_security.main.target_path', $this->generateUrl('app_order'));
+        
+        return $this->redirectToRoute('app_login');
+    }
         return $this->render('cart/index.html.twig', [
             'items' => $data['cart'],
-            'total' =>$data['total']
+            'total' =>$data['total'],
+    
         ]);
     }
 
