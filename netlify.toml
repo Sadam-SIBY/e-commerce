@@ -1,6 +1,6 @@
 [build]
   publish = "public/"
-  command = "composer install"
+  command = "composer install && php bin/console cache:warmup"
 
 [context.production.environment]
   PHP_VERSION = "8.2"
