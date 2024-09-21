@@ -43,6 +43,10 @@ h6{
 #navbarScroll{
     justify-content: space-between;
 }
+
+.img-france{
+    height: 1.5rem;
+}
 .container{
     flex: 1;
 }
